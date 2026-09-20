@@ -4,6 +4,16 @@
   "description": "Shared pipeline for dsh-portage plugins: neutral transcript IR, incremental passes, durable state, and the DSH session writer",
   "type": "module",
   "license": "MIT",
+  "author": "Allen Fang",
+  "homepage": "https://github.com/qizf7/dsh-portage#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qizf7/dsh-portage.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/qizf7/dsh-portage/issues"
+  },
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",

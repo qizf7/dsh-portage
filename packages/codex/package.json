@@ -4,6 +4,16 @@
   "description": "Codex \u2194 DSH session sync plugin for DeepSeek Harness",
   "type": "module",
   "license": "MIT",
+  "author": "Allen Fang",
+  "homepage": "https://github.com/qizf7/dsh-portage#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qizf7/dsh-portage.git",
+    "directory": "packages/codex"
+  },
+  "bugs": {
+    "url": "https://github.com/qizf7/dsh-portage/issues"
+  },
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",

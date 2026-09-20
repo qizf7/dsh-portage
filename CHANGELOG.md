@@ -23,4 +23,4 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A source file that shrank (replaced or rotated) is abandoned with a warning
   instead of silently duplicating or blocking its session.
 
-[Unreleased]: https://github.com/OWNER/dsh-portage/commits/main
+[Unreleased]: https://github.com/qizf7/dsh-portage/commits/main

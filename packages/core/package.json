@@ -1,0 +1,39 @@
+{
+  "name": "dsh-portage-core",
+  "version": "0.1.0",
+  "description": "Shared pipeline for dsh-portage plugins: neutral transcript IR, incremental passes, durable state, and the DSH session writer",
+  "type": "module",
+  "license": "MIT",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./ir": "./src/ir.js",
+    "./pipeline": "./src/pipeline.js",
+    "./runner": "./src/runner.js",
+    "./schedule": "./src/schedule.js",
+    "./state": "./src/state.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "session-sync"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-atomic-write": "^0.1.5-rc.2",
+    "@deepseek-ai/dsh-home-paths": "^0.1.5-rc.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2"
+  }
+}

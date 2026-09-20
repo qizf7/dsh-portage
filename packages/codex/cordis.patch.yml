@@ -1,0 +1,13 @@
+# Layers Codex ↔ DSH sync into a profile.
+#
+# The row id is the package name without its `dsh-` prefix, matching the shipped
+# bundles (`@deepseek-ai/dsh-llm-deepseek` → `llm-deepseek`). Configure the row
+# from your own profile patch layer:
+#
+#   - id: portage-codex
+#     config:
+#       import:
+#         sinceDays: 7
+- insert:
+    - id: portage-codex
+      name: dsh-portage-codex

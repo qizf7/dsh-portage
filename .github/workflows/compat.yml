@@ -1,0 +1,27 @@
+name: compat
+
+# DeepSeek Harness ships release candidates with pre-1.0 version numbers, so the
+# only honest way to know a new harness release still accepts our events is to
+# run the integration tests against it. This job moves the DSH peer packages to
+# the newest published line and reports what it resolved.
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  newest-harness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - name: Move DSH packages to the newest published line
+        run: pnpm --filter dsh-portage-codex update @deepseek-ai/dsh-session @deepseek-ai/dsh-session-persistence-jsonl @deepseek-ai/cordis @deepseek-ai/schemastery --latest
+      - name: Resolved DSH versions
+        run: pnpm list -r --depth 0
+      - run: pnpm -r test

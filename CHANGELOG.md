@@ -6,6 +6,18 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-20
+
+### Fixed
+
+- Consecutive tool calls in one turn are announced by a single
+  `assistant/message` carrying one `tool-call` block per call. Previously only
+  the first call of a run was announced, so every later `tool/result` was an
+  orphan: rendering was fine, but resuming an imported session failed with
+  `Messages with role 'tool' must be a response to a preceding message with
+  'tool_calls'` (`INVALID_REQUEST`).
+- The item following a run of tool calls is no longer skipped.
+
 ## [0.1.1] - 2026-09-20
 
 ### Fixed
@@ -33,6 +45,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A source file that shrank (replaced or rotated) is abandoned with a warning
   instead of silently duplicating or blocking its session.
 
-[Unreleased]: https://github.com/qizf7/dsh-portage/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/qizf7/dsh-portage/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/qizf7/dsh-portage/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/qizf7/dsh-portage/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/qizf7/dsh-portage/releases/tag/v0.1.0

@@ -1,6 +1,6 @@
 {
   "name": "dsh-portage-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Shared pipeline for dsh-portage plugins: neutral transcript IR, incremental passes, durable state, and the DSH session writer",
   "type": "module",
   "license": "MIT",

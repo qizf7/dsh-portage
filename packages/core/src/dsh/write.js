@@ -241,18 +241,29 @@ export function emitTurn(emitter, turn, sessionKey) {
     }
     if (item.kind === 'tool') {
       if (!stepOpen) openStep();
-      const callId = String(item.id ?? '') || `${sessionKey}-c${turnNumber}-${index}`;
-      if (content.length > 0 || !assistantSeen) {
+      // A provider rejects a tool result whose call the preceding assistant
+      // message never announced, so one assistant message must carry a
+      // `tool-call` block for EVERY call in a consecutive run — grouping them
+      // also matches how DSH itself stores parallel calls.
+      const run = [];
+      while (index < turn.items.length && turn.items[index].kind === 'tool') {
+        const call = turn.items[index];
+        const callId = String(call.id ?? '') || `${sessionKey}-c${turnNumber}-${index}`;
+        run.push({ call, callId });
         content.push({
           type: 'tool-call',
           id: callId,
-          name: String(item.tool?.name ?? 'tool'),
-          arguments: argumentsJson(item.tool?.args),
+          name: String(call.tool?.name ?? 'tool'),
+          arguments: argumentsJson(call.tool?.args),
         });
-        flushAssistant();
+        index += 1;
       }
-      events.push(...emitter.toolPair(turnNumber, step, item, callId));
+      flushAssistant();
+      for (const entry of run) {
+        events.push(...emitter.toolPair(turnNumber, step, entry.call, entry.callId));
+      }
       toolSeen = true;
+      index -= 1; // the surrounding for-loop advances to the first item after the run
       continue;
     }
     const isReasoning = item.kind === 'reasoning' || item.kind === 'plan';

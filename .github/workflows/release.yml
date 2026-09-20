@@ -35,8 +35,12 @@ jobs:
           pnpm --filter dsh-portage-core pack --pack-destination dist
           pnpm --filter dsh-portage-codex pack --pack-destination dist
       - name: Publish in dependency order
+        # Absolute paths matter: npm parses a bare `dist/pkg-1.0.0.tgz` as the
+        # GitHub shorthand `owner/repo` and tries `git ls-remote` on it.
         run: |
-          npm publish "$(ls dist/dsh-portage-core-*.tgz)" --provenance --access public
-          npm publish "$(ls dist/dsh-portage-codex-*.tgz)" --provenance --access public
+          core="$(pwd)/$(ls dist/dsh-portage-core-*.tgz)"
+          codex="$(pwd)/$(ls dist/dsh-portage-codex-*.tgz)"
+          npm publish "$core" --provenance --access public
+          npm publish "$codex" --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

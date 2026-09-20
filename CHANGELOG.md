@@ -6,6 +6,16 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-20
+
+### Fixed
+
+- Releases now carry a provenance attestation: the workflow packs with
+  `pnpm pack` and publishes with `npm publish --provenance`, because
+  `pnpm publish` has no `--provenance` flag and silently ignored it.
+
+## [0.1.0] - 2026-09-20
+
 ### Added
 
 - Bidirectional plugin skeleton: one plugin per external tool, one entry, with
@@ -23,4 +33,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A source file that shrank (replaced or rotated) is abandoned with a warning
   instead of silently duplicating or blocking its session.
 
-[Unreleased]: https://github.com/qizf7/dsh-portage/commits/main
+[Unreleased]: https://github.com/qizf7/dsh-portage/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/qizf7/dsh-portage/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/qizf7/dsh-portage/releases/tag/v0.1.0

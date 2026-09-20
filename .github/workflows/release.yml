@@ -1,8 +1,14 @@
 name: release
 
-# Tag a release with `v<version>` (for example `v0.1.0`) after bumping every
-# package's version in the same commit. pnpm publishes in workspace dependency
-# order: dsh-portage-core first, then the plugin packages that depend on it.
+# Tag a release with `v<version>` (for example `v0.1.1`) after bumping every
+# package's version in the same commit.
+#
+# Publishing goes through `npm publish --provenance` over tarballs produced by
+# `pnpm pack`: pnpm is what rewrites the `workspace:` dependency protocol at
+# pack time, and npm is the client that can actually generate a provenance
+# attestation — `pnpm publish` has no `--provenance` flag and silently drops it.
+# Packages are published in dependency order: core first, then the plugin
+# packages that depend on it.
 on:
   push:
     tags: ['v*']
@@ -23,6 +29,14 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: pnpm install --frozen-lockfile
       - run: pnpm -r test
-      - run: pnpm publish -r --provenance --access public --no-git-checks
+      - name: Pack workspace packages
+        run: |
+          mkdir -p dist
+          pnpm --filter dsh-portage-core pack --pack-destination dist
+          pnpm --filter dsh-portage-codex pack --pack-destination dist
+      - name: Publish in dependency order
+        run: |
+          npm publish "$(ls dist/dsh-portage-core-*.tgz)" --provenance --access public
+          npm publish "$(ls dist/dsh-portage-codex-*.tgz)" --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
